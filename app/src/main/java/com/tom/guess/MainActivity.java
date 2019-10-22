@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"secret"+secret);
         number = findViewById(R.id.num);
         final int guess =Integer.parseInt(number.getText().toString());
+        number.setText(getText(guess));
+        Log.d(TAG,"guess"+number);
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(MainActivity.this,"bigger",Toast.LENGTH_LONG).show();
                 }
+
+
 
 
 
