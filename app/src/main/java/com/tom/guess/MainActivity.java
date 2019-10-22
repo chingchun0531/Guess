@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -31,13 +32,20 @@ public class MainActivity extends AppCompatActivity {
         secret = new Random().nextInt(10)+1;
         Log.d(TAG,"secret"+secret);
         number = findViewById(R.id.num);
-        float guess = Float.parseFloat(number.getText().toString());
+        final int guess =Integer.parseInt(number.getText().toString());
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(secret==guess){
+                    Toast.makeText(MainActivity.this,"You're right",Toast.LENGTH_LONG).show();
+                }else if(secret<guess){
+                    Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(MainActivity.this,"bigger",Toast.LENGTH_LONG).show();
+                }
 
 
 
