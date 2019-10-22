@@ -8,11 +8,19 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    String TAG = MainActivity.class.getSimpleName();
+    int secret;
+    EditText number;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +28,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        secret = new Random().nextInt(10)+1;
+        Log.d(TAG,"secret"+secret);
+        number = findViewById(R.id.num);
+        float guess = Float.parseFloat(number.getText().toString());
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+
+
             }
         });
     }
@@ -51,5 +65,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void result(View view){
+
     }
 }
