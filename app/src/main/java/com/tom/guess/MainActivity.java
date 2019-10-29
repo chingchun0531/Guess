@@ -1,10 +1,12 @@
 package com.tom.guess;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,51 +14,37 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName();
-    int secret;
-    EditText number;
-
-
+    int secret= new Random().nextInt(10)+1;
+    EditText edNumber;
+    TextView edCounter;
+    int counter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        secret = new Random().nextInt(10)+1;
-        Log.d(TAG,"secret"+secret);
-        number = findViewById(R.id.num);
-        final int guess =Integer.parseInt(number.getText().toString());
-        number.setText(getText(guess));
-        Log.d(TAG,"guess"+number);
-
+        Log.d(TAG,"secret" + secret);
+        edNumber = findViewById(R.id.num);
+        edCounter = findViewById(R.id.counter);
+        edCounter.setText(counter+"");
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if(secret==guess){
-                    Toast.makeText(MainActivity.this,"You're right",Toast.LENGTH_LONG).show();
-                }else if(secret<guess){
-                    Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(MainActivity.this,"bigger",Toast.LENGTH_LONG).show();
-                }
-
-
-
-
-
+            public void onClick(View view){
             }
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -79,6 +67,36 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void result(View view){
-
+        int number =Integer.parseInt(edNumber.getText().toString());
+        counter++;
+        edCounter.setText(counter+"");
+        if(secret>number){
+           new AlertDialog.Builder(MainActivity.this)
+                   .setTitle("ha")
+                   .setMessage("Bigger")
+                   .setPositiveButton("OK",null)
+                   .show();
+        }else if(secret<number){
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("ha")
+                    .setMessage("smaller")
+                    .setPositiveButton("OK",null)
+                    .show();
+        }else{
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("ha")
+                    .setMessage("Bingo")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            secret= new Random().nextInt(10)+1;
+                            counter = 0;
+                            edCounter.setText(counter+"");
+                        }
+                    })
+                    .show();
+        }
     }
-}
+    }
+
+
